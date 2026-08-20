@@ -4,6 +4,10 @@
 
 ![Runnel separates the historical Codex memory incident from its live fail-closed evidence gate.](assets/launch/runnel-launch-card.png)
 
+[Watch the 23-second public-safe demo](https://github.com/ArshyaAI/runnel/blob/main/assets/launch/runnel-demo-v011-social.mp4):
+real v0.1.1 version/self-test, then an explicitly labeled synthetic contradictory
+fixture that stays locked. No live process scan or recovery is recorded.
+
 Runnel is a local-first macOS CLI for developers running many AI coding
 workflows. It answers two different questions without pretending they are the same:
 
