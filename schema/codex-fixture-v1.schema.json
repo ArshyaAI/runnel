@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.runnel.dev/v1/codex-fixture.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "case_id", "expected", "probes", "process_tree", "metadata", "samples"],
+  "properties": {
+    "schema_version": {"const": "runnel.codex-fixture/v1"},
+    "case_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "availability", "selectable", "evidence"],
+      "properties": {
+        "classification": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/classification"},
+        "availability": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "selectable": {"type": "boolean"},
+        "evidence": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/evidence_code"}, "uniqueItems": true}
+      }
+    },
+    "probes": {"$ref": "#/$defs/probe_matrix"},
+    "process_tree": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/process_node"}},
+    "metadata": {"$ref": "#/$defs/metadata"},
+    "samples": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/sample"}}
+  },
+  "$defs": {
+    "probe_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "parent", "origin", "metadata", "descriptor", "tail", "tty", "sockets", "writable_activity", "children", "stack"],
+      "properties": {
+        "identity": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "parent": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "origin": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "metadata": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "descriptor": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "tail": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "tty": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "sockets": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "writable_activity": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "children": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"},
+        "stack": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/availability"}
+      }
+    },
+    "process_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "pid", "parent_pid", "start_tick", "uid", "executable", "pid_version", "unique_id", "origin", "argv"],
+      "properties": {
+        "role": {"enum": ["app", "sandbox_parent", "worker", "replacement", "child"]},
+        "pid": {"type": "integer", "minimum": 100, "maximum": 999},
+        "parent_pid": {"type": "integer", "minimum": 0, "maximum": 999},
+        "start_tick": {"type": "integer", "minimum": 1, "maximum": 9999},
+        "uid": {"const": 9001},
+        "executable": {"enum": ["chatgpt_app", "embedded_codex", "chatgpt_node", "replacement_helper", "synthetic_child"]},
+        "pid_version": {"type": "integer", "minimum": 1, "maximum": 9999},
+        "unique_id": {"type": "integer", "minimum": 1, "maximum": 999999},
+        "origin": {"enum": ["exact", "unsigned", "altered", "resigned", "wrong_team", "wrong_identifier", "wrong_digest", "mismatched_parent", "unknown"]},
+        "argv": {"enum": ["supported_app", "supported_parent", "supported_worker", "mismatched_parent", "mismatched_worker", "replacement"]}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "version", "data_version", "rollout", "edge_status", "file_identity", "descriptor"],
+      "properties": {
+        "schema": {"enum": ["compatible", "incompatible", "unknown"]},
+        "version": {"enum": ["exact", "unsupported", "unknown"]},
+        "data_version": {"enum": ["stable", "changed", "unknown"]},
+        "rollout": {"enum": ["active", "paused", "completed", "truncated", "unknown_event", "contradictory"]},
+        "edge_status": {"enum": ["closed", "open", "unknown"]},
+        "file_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "device", "inode"],
+          "properties": {
+            "state": {"enum": ["stable", "changed", "mismatch", "unknown"]},
+            "device": {"type": "integer", "minimum": 1, "maximum": 9999},
+            "inode": {"type": "integer", "minimum": 1, "maximum": 999999}
+          }
+        },
+        "descriptor": {"enum": ["exact_read_only", "permission_denied", "mismatch", "writable", "unknown"]}
+      }
+    },
+    "sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["second", "cpu_ticks", "file_size", "file_mtime_tick", "device", "inode", "stack", "tty", "listeners", "established", "writable_output", "children"],
+      "properties": {
+        "second": {"enum": [0, 2, 4, 6]},
+        "cpu_ticks": {"type": "integer", "minimum": 0, "maximum": 999999},
+        "file_size": {"type": "integer", "minimum": 0, "maximum": 999999},
+        "file_mtime_tick": {"type": "integer", "minimum": 0, "maximum": 999999},
+        "device": {"type": "integer", "minimum": 1, "maximum": 9999},
+        "inode": {"type": "integer", "minimum": 1, "maximum": 999999},
+        "stack": {"enum": ["supported_read", "changed", "unavailable", "not_sampled"]},
+        "tty": {"type": "boolean"},
+        "listeners": {"type": "integer", "minimum": 0, "maximum": 9},
+        "established": {"type": "integer", "minimum": 0, "maximum": 9},
+        "writable_output": {"type": "boolean"},
+        "children": {"type": "integer", "minimum": 0, "maximum": 9}
+      }
+    }
+  }
+}

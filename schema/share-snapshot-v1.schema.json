@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.runnel.dev/v1/share-snapshot.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tool_version", "platform", "availability", "groups"],
+  "properties": {
+    "schema_version": {"const": "runnel.share-snapshot/v1"},
+    "tool_version": {"type": "string", "minLength": 1},
+    "platform": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/platform"},
+    "availability": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/probe_availability"}},
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["family", "classification", "attribution", "protection", "process_count", "cpu_time_bucket", "rss_bucket"],
+        "properties": {
+          "family": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/workflow_family"},
+          "classification": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/classification"},
+          "attribution": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/evidence_code"}, "uniqueItems": true},
+          "protection": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/evidence_code"}, "uniqueItems": true},
+          "process_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+          "cpu_time_bucket": {"enum": ["unknown", "zero", "under_1s", "1_10s", "10_60s", "1_10m", "10m_plus"]},
+          "rss_bucket": {"enum": ["unknown", "zero", "under_100mb", "100_500mb", "500mb_1gb", "1_5gb", "5gb_plus"]}
+        }
+      }
+    }
+  }
+}

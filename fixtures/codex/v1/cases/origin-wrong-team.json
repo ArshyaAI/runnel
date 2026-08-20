@@ -1,0 +1,120 @@
+{
+  "schema_version": "runnel.codex-fixture/v1",
+  "case_id": "origin-wrong-team",
+  "expected": {
+    "classification": "unknown",
+    "availability": "available",
+    "selectable": false,
+    "evidence": []
+  },
+  "probes": {
+    "identity": "available",
+    "parent": "available",
+    "origin": "available",
+    "metadata": "available",
+    "descriptor": "available",
+    "tail": "available",
+    "tty": "available",
+    "sockets": "available",
+    "writable_activity": "available",
+    "children": "available",
+    "stack": "not_applicable"
+  },
+  "process_tree": [
+    {
+      "role": "sandbox_parent",
+      "pid": 200,
+      "parent_pid": 100,
+      "start_tick": 10,
+      "uid": 9001,
+      "executable": "embedded_codex",
+      "pid_version": 20,
+      "unique_id": 20020,
+      "origin": "exact",
+      "argv": "supported_parent"
+    },
+    {
+      "role": "worker",
+      "pid": 300,
+      "parent_pid": 200,
+      "start_tick": 20,
+      "uid": 9001,
+      "executable": "chatgpt_node",
+      "pid_version": 30,
+      "unique_id": 30030,
+      "origin": "wrong_team",
+      "argv": "supported_worker"
+    }
+  ],
+  "metadata": {
+    "schema": "compatible",
+    "version": "exact",
+    "data_version": "stable",
+    "rollout": "completed",
+    "edge_status": "closed",
+    "file_identity": {
+      "state": "stable",
+      "device": 41,
+      "inode": 41001
+    },
+    "descriptor": "exact_read_only"
+  },
+  "samples": [
+    {
+      "second": 0,
+      "cpu_ticks": 100,
+      "file_size": 700,
+      "file_mtime_tick": 50,
+      "device": 41,
+      "inode": 41001,
+      "stack": "not_sampled",
+      "tty": false,
+      "listeners": 0,
+      "established": 0,
+      "writable_output": false,
+      "children": 0
+    },
+    {
+      "second": 2,
+      "cpu_ticks": 110,
+      "file_size": 700,
+      "file_mtime_tick": 50,
+      "device": 41,
+      "inode": 41001,
+      "stack": "not_sampled",
+      "tty": false,
+      "listeners": 0,
+      "established": 0,
+      "writable_output": false,
+      "children": 0
+    },
+    {
+      "second": 4,
+      "cpu_ticks": 120,
+      "file_size": 700,
+      "file_mtime_tick": 50,
+      "device": 41,
+      "inode": 41001,
+      "stack": "not_sampled",
+      "tty": false,
+      "listeners": 0,
+      "established": 0,
+      "writable_output": false,
+      "children": 0
+    },
+    {
+      "second": 6,
+      "cpu_ticks": 130,
+      "file_size": 700,
+      "file_mtime_tick": 50,
+      "device": 41,
+      "inode": 41001,
+      "stack": "not_sampled",
+      "tty": false,
+      "listeners": 0,
+      "established": 0,
+      "writable_output": false,
+      "children": 0
+    }
+  ]
+}

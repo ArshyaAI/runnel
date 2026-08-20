@@ -1,0 +1,56 @@
+version: 2
+
+project_name: runnel
+dist: dist
+
+# OSS GoReleaser config. Local smoke validation should use:
+#   goreleaser build --snapshot --single-target --id runnel
+# Final per-arch release packaging is driven by the native macOS matrix in CI.
+
+builds:
+  - id: runnel
+    main: ./cmd/runnel
+    binary: runnel
+    goos:
+      - darwin
+    goarch:
+      - arm64
+      - amd64
+    env:
+      - CGO_ENABLED=1
+    flags:
+      - -trimpath
+    ldflags:
+      - -s
+      - -w
+      - -buildid=
+      - -X github.com/ArshyaAI/runnel/internal/buildinfo.Version={{ .Version }}
+      - -X github.com/ArshyaAI/runnel/internal/buildinfo.Commit={{ .ShortCommit }}
+      - -X github.com/ArshyaAI/runnel/internal/buildinfo.Date={{ .CommitDate }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - id: runnel
+    ids: [runnel]
+    formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+      - SECURITY.md
+      - PRIVACY.md
+      - schema/*.json
+      - schema/**/*.json
+      - completions/*
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+release:
+  mode: replace
+  draft: true
+  replace_existing_draft: false
+
+changelog:
+  disable: true

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.runnel.dev/v1/result-receipt.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tool_version", "receipt_id", "prepared_digest", "finalized_at", "outcome", "confirmation_ok", "revalidation", "signal_attempts", "target_exit_count", "protected_signaled_count", "protected_present_count", "selected_rss_bytes", "memory_pressure_before", "memory_pressure_after", "error_codes"],
+  "properties": {
+    "schema_version": {"const": "runnel.result-receipt/v1"},
+    "tool_version": {"type": "string", "minLength": 1},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "prepared_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "finalized_at": {"type": "string", "format": "date-time"},
+    "outcome": {"enum": ["verified", "partial", "refused", "failed", "cancelled"]},
+    "confirmation_ok": {"type": "boolean"},
+    "revalidation": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/detector_evidence"},
+    "signal_attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target", "attempted", "error_code"],
+        "properties": {
+          "target": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/darwin_action_identity"},
+          "attempted": {"type": "boolean"},
+          "error_code": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/error_code"}
+        }
+      }
+    },
+    "target_exit_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "protected_signaled_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "protected_present_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "selected_rss_bytes": {"type": "integer", "minimum": 0},
+    "memory_pressure_before": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/pressure_level"},
+    "memory_pressure_after": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/pressure_level"},
+    "error_codes": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/error_code"}, "uniqueItems": true}
+  }
+}

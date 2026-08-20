@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.runnel.dev/v1/prepared-receipt.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tool_version", "receipt_id", "prepared_at", "detector_id", "target", "protected", "evidence", "confirmation_binding", "confirmation_ok", "outcome"],
+  "properties": {
+    "schema_version": {"const": "runnel.prepared-receipt/v1"},
+    "tool_version": {"type": "string", "minLength": 1},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "prepared_at": {"type": "string", "format": "date-time"},
+    "detector_id": {"const": "codex-chatgpt-trusted-worker/v1"},
+    "target": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/darwin_action_identity"},
+    "protected": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/darwin_action_identity"}},
+    "evidence": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/detector_evidence"},
+    "confirmation_binding": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "confirmation_ok": {"type": "boolean"},
+    "outcome": {"const": "prepared"}
+  }
+}

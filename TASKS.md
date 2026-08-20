@@ -1,18 +1,11 @@
 # Tasks
 
-## In Progress
+## Ready for action-time approval
 
-- [ ] Build typed schemas, fixtures, and deterministic classifier
-
-## Backlog
-
-- [ ] Build bounded macOS workflow radar and family attribution
-- [ ] Build exact Codex 0.148 adapter and deep evidence sampler
-- [ ] Build recovery transaction, identity revalidation, and receipts
-- [ ] Build TUI, JSON/NDJSON, history, doctor, and share export
-- [ ] Run fixture, integration, race, privacy, performance, and dogfood gates
-- [ ] Package signed/checksummed Darwin artifacts and Homebrew tap metadata
-- [ ] Prepare demo, README hero, GitHub release, and X launch packet
+- [ ] Create and push the public GitHub repository
+- [ ] Run native GitHub CI on arm64 and Intel macOS runners
+- [ ] Tag and assemble the attested v0.1.0 release candidate
+- [ ] Publish the approved X launch post and image
 
 ## Done
 
@@ -20,3 +13,12 @@
 - [x] Product demand, competitor, and Mole UX research
 - [x] Dual-Layer product/design contract approved
 - [x] Working identity selected: Runnel / `runnel`
+- [x] Build typed schemas, fixtures, and deterministic classifier
+- [x] Build bounded macOS workflow radar and family attribution
+- [x] Build exact ChatGPT embedded Codex 0.148.0-alpha.15 adapter and deep sampler
+- [x] Build recovery transaction, identity revalidation, and immutable receipts
+- [x] Build TUI, strict JSON, history, doctor, and share export
+- [x] Run fixture, integration, race, privacy, performance, and dogfood gates
+- [x] Package deterministic Darwin artifacts and Homebrew formula metadata
+- [x] Prepare demo, README hero, launch card, GitHub copy, and X launch packet
+- [x] Complete independent release/security review with all material findings closed

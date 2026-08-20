@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.runnel.dev/v1/codex-fixture-manifest.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "adapter", "sqlite", "rollout", "hash_algorithm", "corpus_root", "files"],
+  "properties": {
+    "schema_version": {"const": "runnel.codex-fixture-manifest/v1"},
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "embedded_codex_version", "team_identifier", "codex_identifier", "codex_sha256", "node_identifier", "node_sha256", "worker_sha256", "leaf_argv_grammar", "parent_argv_grammar"],
+      "properties": {
+        "id": {"const": "codex-chatgpt-trusted-worker/v1"},
+        "embedded_codex_version": {"const": "0.148.0-alpha.15"},
+        "team_identifier": {"const": "2DC432GLL2"},
+        "codex_identifier": {"const": "codex"},
+        "codex_sha256": {"const": "7645c3caf5607e4528eb3a15b12496c284c2a918939aed34e863c760c1b421e7"},
+        "node_identifier": {"const": "node"},
+        "node_sha256": {"const": "e3860ffeda3aaf7203123bd661cae18b478924215048fcfea560fc63950cc95a"},
+        "worker_sha256": {"const": "9f936ad8addf558d3de3f415917680ae703bf51b4d63f62d718413a3acb4edb7"},
+        "leaf_argv_grammar": {"const": "chatgpt_node --experimental-vm-modules SYNTHETIC_BOUNDED_TEMP/trusted-worker.js SYNTHETIC_WORKDIR"},
+        "parent_argv_grammar": {"const": "embedded_codex sandbox SYNTHETIC_ARGS -- SAME_NODE SAME_WORKER SAME_WORKDIR"}
+      }
+    },
+    "sqlite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tables", "threads_columns", "spawn_edges_columns", "spawn_edge_status_values", "required_completed_edge_status", "snapshot_grammar"],
+      "properties": {
+        "tables": {"const": ["thread_spawn_edges", "threads"]},
+        "threads_columns": {"const": ["id", "rollout_path", "updated_at", "cli_version", "thread_source"]},
+        "spawn_edges_columns": {"const": ["parent_thread_id", "child_thread_id", "status"]},
+        "spawn_edge_status_values": {"const": ["closed", "open"]},
+        "required_completed_edge_status": {"const": "closed"},
+        "snapshot_grammar": {"const": "data_version-before equals data_version-after"}
+      }
+    },
+    "rollout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tail_limit_bytes", "max_terminal_line_bytes", "terminal_event", "terminal_payload_type"],
+      "properties": {
+        "tail_limit_bytes": {"const": 262144},
+        "max_terminal_line_bytes": {"const": 65536},
+        "terminal_event": {"const": "event_msg"},
+        "terminal_payload_type": {"const": "task_complete"}
+      }
+    },
+    "hash_algorithm": {"const": "sha256(path NUL digest LF), lexical path order; manifest excluded"},
+    "corpus_root": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^cases/[a-z0-9-]+\\.json$"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

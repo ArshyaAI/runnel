@@ -1,0 +1,53 @@
+{
+  "schema_version": "runnel.codex-fixture-manifest/v1",
+  "adapter": {
+    "id": "codex-chatgpt-trusted-worker/v1",
+    "embedded_codex_version": "0.148.0-alpha.15",
+    "team_identifier": "2DC432GLL2",
+    "codex_identifier": "codex",
+    "codex_sha256": "7645c3caf5607e4528eb3a15b12496c284c2a918939aed34e863c760c1b421e7",
+    "node_identifier": "node",
+    "node_sha256": "e3860ffeda3aaf7203123bd661cae18b478924215048fcfea560fc63950cc95a",
+    "worker_sha256": "9f936ad8addf558d3de3f415917680ae703bf51b4d63f62d718413a3acb4edb7",
+    "leaf_argv_grammar": "chatgpt_node --experimental-vm-modules SYNTHETIC_BOUNDED_TEMP/trusted-worker.js SYNTHETIC_WORKDIR",
+    "parent_argv_grammar": "embedded_codex sandbox SYNTHETIC_ARGS -- SAME_NODE SAME_WORKER SAME_WORKDIR"
+  },
+  "sqlite": {
+    "tables": ["thread_spawn_edges", "threads"],
+    "threads_columns": ["id", "rollout_path", "updated_at", "cli_version", "thread_source"],
+    "spawn_edges_columns": ["parent_thread_id", "child_thread_id", "status"],
+    "spawn_edge_status_values": ["closed", "open"],
+    "required_completed_edge_status": "closed",
+    "snapshot_grammar": "data_version-before equals data_version-after"
+  },
+  "rollout": {
+    "tail_limit_bytes": 262144,
+    "max_terminal_line_bytes": 65536,
+    "terminal_event": "event_msg",
+    "terminal_payload_type": "task_complete"
+  },
+  "hash_algorithm": "sha256(path NUL digest LF), lexical path order; manifest excluded",
+  "corpus_root": "4bf8cebc03d227700f2bbb2b843b6cf2c7c0c63e2a244090278706f093ab7748",
+  "files": [
+    {"path": "cases/active.json", "sha256": "3fccd09ae2b0f20196ae7262877021a820a1ed66fee9ff3702c5d583b6e08a7e"},
+    {"path": "cases/contradictory.json", "sha256": "4774e6a3c13d6393d351668bea610aaacd65bd0b24a5cf271999b3e00a4edcec"},
+    {"path": "cases/exec-changed.json", "sha256": "c7018ac97a221c0930628d6ae76ccfe721f50f5a7c3bbd0eee69753eadee5918"},
+    {"path": "cases/origin-altered.json", "sha256": "57160ffd4933ca00f6750a74b363c2a5f4256161b43919197b5b0622866802fa"},
+    {"path": "cases/origin-mismatched-parent.json", "sha256": "1f45dbe0fc782f38ada880cd2082c156cad7175c281ff156ffe7d8d992f7f758"},
+    {"path": "cases/origin-resigned.json", "sha256": "249ccf3f73740494af1ff746ffb4f66c9ee7e6742128917d3e33329b40e80a7d"},
+    {"path": "cases/origin-unsigned.json", "sha256": "2ef9c0bfafda1d4ea28f93114a87e348d4250344a36927cd051ece0d14b7fff0"},
+    {"path": "cases/origin-wrong-digest.json", "sha256": "0038bd260d6d08c6bab9204edab3b4023f34e589abbb9a2af6b8168a86f503c0"},
+    {"path": "cases/origin-wrong-identifier.json", "sha256": "14c0c74baa90515c4e0df7cbfa8a2fd4dd58e61c716877132fd9763bea2e3e62"},
+    {"path": "cases/origin-wrong-team.json", "sha256": "7a2c88978e3ea11fadd3a2ebb4c27b182e5d7b297c3f9a82cab1357e7a1b6b40"},
+    {"path": "cases/paused.json", "sha256": "738c1d7e23a7fb18203ef3b290bf8bf8216b024e838f35f6f316313c0d5e8101"},
+    {"path": "cases/permission-denied.json", "sha256": "479f411e222b316cbdb9ea896ae2ed7ffcfc79e674bcd09e1022fc3494201879"},
+    {"path": "cases/pid-reuse.json", "sha256": "457431ce294ba28c1b6e72e01d8fe75bd3cfb70b3c31f2eebf79bac2ff2ed690"},
+    {"path": "cases/socket-present.json", "sha256": "b6b365ba5364b7e3b3fda48724b9f7e01522dc24f47a4b2b3c7f99134d5d2fda"},
+    {"path": "cases/stack-changed.json", "sha256": "aece34374b3333b898cb0f63dec1ebc08f4ab1ced538454933ba16e1616615ad"},
+    {"path": "cases/supported-stale.json", "sha256": "99a3f4d80a35142bebfaa447a535940be5ddea0bc23dc957fdc2e37f44019dc8"},
+    {"path": "cases/truncated-tail.json", "sha256": "305ec2f285c573904c543810b55709a3daafae40610765403b0bd47060ce5f80"},
+    {"path": "cases/tty-present.json", "sha256": "3d0b3b13efcdc56927f483bd7d4fd844f3908c8b01cc9a48289a12454f50d9b7"},
+    {"path": "cases/unknown-tail.json", "sha256": "1b04870c13d18d5aa4845beb2c8488a3281f951b9877690e4d4183e1253d5539"},
+    {"path": "cases/unsupported-version.json", "sha256": "8b916e1757b7b10e02511eb6a51b74312320b94e40607a6c5be38fecded31643"}
+  ]
+}

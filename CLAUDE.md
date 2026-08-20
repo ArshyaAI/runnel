@@ -5,7 +5,7 @@ recovery only when a versioned evidence contract proves an exact target safe.
 
 ## Stack
 
-- Go 1.24+ (`go.mod`)
+- Go 1.25+ (`go.mod`); release and CI gates use Go 1.27.0
 - Runtime and UI dependencies are declared only in `go.mod`; never infer them
 
 ## Commands

@@ -1,0 +1,8 @@
+Sampling process 101 for 1 seconds with 10 milliseconds of run time between samples
+Call graph:
+    100 Thread_0x1 DispatchQueue_1: com.apple.main-thread
+    + 100 node::SpinEventLoop
+    +   80 uv__fs_work
+    +   80 read(fd, buffer, size)
+    +   70 v8::internal::JsonParser::ParseJson
+Total number in stack (recursive counted multiple, when >=5):

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.runnel.dev/v1/common.json",
+  "$defs": {
+    "availability": {
+      "type": "string",
+      "enum": [
+        "available",
+        "not_applicable",
+        "permission_denied",
+        "unsupported_platform",
+        "unsupported_version",
+        "process_exited",
+        "timeout",
+        "malformed_output",
+        "schema_incompatible",
+        "contradictory"
+      ]
+    },
+    "classification": {
+      "type": "string",
+      "enum": ["protected", "recently_active", "quiet_unclassified", "unknown", "supported_stale_candidate"]
+    },
+    "evidence_code": {
+      "type": "string",
+      "enum": [
+        "ancestor",
+        "argv_exact",
+        "childless",
+        "cmux_owner",
+        "controlling_tty",
+        "contradictory_ownership",
+        "cpu_increasing",
+        "current_process",
+        "current_uid_only",
+        "cwd_worktree",
+        "database_process",
+        "descriptor_mismatch",
+        "editor_owner",
+        "exec_changed",
+        "executable_family",
+        "incomplete_ownership",
+        "known_parent_grammar",
+        "no_established_socket",
+        "no_listener",
+        "no_tty",
+        "no_writable_output",
+        "origin_exact",
+        "orphaned_parent",
+        "parent_exact",
+        "pid_reused",
+        "rollout_complete",
+        "rollout_unchanged",
+        "rootless_cycle",
+        "security_process",
+        "socket_present",
+        "stack_changed",
+        "supported_read_stack",
+        "sync_process",
+        "tail_truncated",
+        "tty_owner",
+        "tty_present",
+        "unknown_terminal_event",
+        "user_allowlist",
+        "version_exact",
+        "vpn_process"
+      ]
+    },
+    "workflow_family": {
+      "type": "string",
+      "enum": ["unclassified", "codex", "claude", "mcp", "node_dev", "playwright_chromium", "docker_vm", "browser", "local_database", "other"]
+    },
+    "probe_kind": {
+      "type": "string",
+      "enum": ["identity", "executable", "cwd", "tty", "sockets", "descriptors", "stack", "metadata", "rollout_tail", "origin"]
+    },
+    "probe_availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["probe", "status"],
+      "properties": {
+        "probe": {"$ref": "#/$defs/probe_kind"},
+        "status": {"$ref": "#/$defs/availability"}
+      }
+    },
+    "platform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "arch"],
+      "properties": {
+        "os": {"type": "string", "minLength": 1},
+        "arch": {"type": "string", "minLength": 1}
+      }
+    },
+    "process_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pid", "start_time", "uid", "executable"],
+      "properties": {
+        "pid": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+        "start_time": {"type": "string", "format": "date-time"},
+        "uid": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "executable": {"type": "string"}
+      }
+    },
+    "darwin_action_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pid", "start_time", "uid", "executable", "pid_version", "unique_id"],
+      "properties": {
+        "pid": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+        "start_time": {"type": "string", "format": "date-time"},
+        "uid": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "executable": {"type": "string", "minLength": 1},
+        "pid_version": {"type": "integer", "minimum": 1, "maximum": 4294967295},
+        "unique_id": {"type": "integer", "minimum": 1}
+      }
+    },
+    "detector_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["availability", "codes"],
+      "properties": {
+        "availability": {"type": "array", "items": {"$ref": "#/$defs/probe_availability"}},
+        "codes": {"type": "array", "items": {"$ref": "#/$defs/evidence_code"}, "uniqueItems": true}
+      }
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["prepared", "verified", "partial", "refused", "failed", "cancelled"]
+    },
+    "support_state": {"type": "string", "enum": ["supported", "unsupported", "unavailable", "unknown"]},
+    "pressure_level": {"type": "string", "enum": ["unknown", "nominal", "elevated", "critical"]},
+    "error_code": {
+      "type": "string",
+      "enum": ["none", "identity_changed", "evidence_changed", "protected_target", "candidate_unavailable", "confirmation_mismatch", "signal_failed", "verification_failed", "receipt_store_failed", "internal"]
+    }
+  }
+}

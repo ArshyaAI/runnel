@@ -67,7 +67,7 @@ paths or tests.
 | --- | --- | --- |
 | Codex thread and spawn-edge metadata | `codex-session-live/lib/session-store.mjs` (MIT) | Port the read-only SQLite, schema gate, and stable `data_version` snapshot invariants to Go. Do not port UI/server code. |
 | Privacy-safe session demo | `codex-session-live/lib/demo-sanitize.mjs` (MIT) | Reuse the separate-public-object principle, but implement a stricter enumerated allowlist. |
-| Device baseline concepts | `/Users/arshya/bin/device-health-check` (unlicensed local script) | Reimplement from first principles. Use only its audit-first behavior as a smoke-test oracle. |
+| Device baseline concepts | Pre-existing unlicensed local health script | Reimplement from first principles. Use only its audit-first behavior as a smoke-test oracle; do not import or publish the source. |
 | Proven stale-worker incident | 2026-08-18 evidence receipt | Turn the observed unchanged completed rollout + CPU/read loop + no live ownership pattern into a synthetic, privacy-safe fixture contract. Do not copy conversation data. |
 | Mole UX grammar | public Mole v1.51.0 research | Reuse interaction principles only: one command, semantic progress, visible protection, explicit selection, measurable receipt. No GPL code, names, assets, or wording. |
 
@@ -137,7 +137,8 @@ Keep dependencies boring and bounded:
   and a deterministic Model/Update/View loop.
 - Lip Gloss for adaptive, ANSI-aware semantic styling; no color is required for state.
 - gopsutil/v4 for cross-checked Darwin process identity, CPU, RSS, and host metrics.
-- modernc SQLite driver for a read-only, CGO-free Codex metadata adapter.
+- mattn/go-sqlite3 for a small native read-only Codex metadata adapter; CGO is already
+  required by the identity and signature gates.
 - santhosh-tekuri/jsonschema/v6 for embedded Draft 2020-12 validation.
 
 The Darwin action build uses one small CGO shim for `proc_pidinfo`, dynamic lookup of
@@ -248,7 +249,7 @@ The collector uses a process-count-bound worker pool, per-probe deadlines, one g
 context, and deterministic sorting. It retains partial groups with explicit unavailable
 fields instead of dropping them.
 
-The modernc SQLite driver and Codex metadata database are opened lazily only for
+The SQLite driver and Codex metadata database are opened lazily only for
 `explain`/deep evidence. The default radar never initializes SQLite, parses rollout
 tails, or samples stacks; this protects the two-second and 50 MB budgets.
 

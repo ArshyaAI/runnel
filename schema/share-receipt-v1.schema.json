@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.runnel.dev/v1/share-receipt.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tool_version", "platform", "detector_id", "support_state", "availability", "evidence", "target_count", "duration_bucket", "selected_rss_bytes", "target_exit_count", "protected_signaled_count", "protected_present_count", "memory_pressure_before", "memory_pressure_after", "outcome", "error_codes"],
+  "properties": {
+    "schema_version": {"const": "runnel.share-receipt/v1"},
+    "tool_version": {"type": "string", "minLength": 1},
+    "platform": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/platform"},
+    "detector_id": {"const": "codex-chatgpt-trusted-worker/v1"},
+    "support_state": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/support_state"},
+    "availability": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/probe_availability"}},
+    "evidence": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/evidence_code"}, "uniqueItems": true},
+    "target_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "duration_bucket": {"enum": ["unknown", "under_1s", "1_5s", "5_10s", "10_30s", "30s_plus"]},
+    "selected_rss_bytes": {"type": "integer", "minimum": 0},
+    "target_exit_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "protected_signaled_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "protected_present_count": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "memory_pressure_before": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/pressure_level"},
+    "memory_pressure_after": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/pressure_level"},
+    "outcome": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/outcome"},
+    "error_codes": {"type": "array", "items": {"$ref": "https://schemas.runnel.dev/v1/common.json#/$defs/error_code"}, "uniqueItems": true}
+  }
+}
