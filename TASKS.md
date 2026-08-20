@@ -2,7 +2,6 @@
 
 ## In progress
 
-- [ ] Publish and verify the tagged v0.1.1 native patch release.
 - [ ] Capture the 1-hour and 24-hour launch conversion checkpoints.
 - [ ] Turn one qualified maintainer/user problem into a useful contribution.
 
@@ -24,3 +23,5 @@
 - [x] Publish the public repository, native v0.1.0 release, X launch, and technical reply
 - [x] Publish the checksum-pinned Homebrew tap with native install/self-test CI
 - [x] Prepare and locally verify v0.1.1 archive hardening with complete linked docs and adversarial tar validation
+- [x] Publish and verify the tagged, attested v0.1.1 native patch release
+- [x] Update the public Homebrew tap and verify the exact v0.1.1 install/self-test path

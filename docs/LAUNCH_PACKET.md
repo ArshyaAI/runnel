@@ -3,6 +3,15 @@
 **Status:** published on 2026-08-20.
 **Release:** `Runnel v0.1.0` (non-draft, non-prerelease), published at 2026-08-20T06:42:49Z: https://github.com/ArshyaAI/runnel/releases/tag/v0.1.0
 
+**Post-launch patch:** `Runnel v0.1.1`, published at 2026-08-20T15:59:14Z:
+https://github.com/ArshyaAI/runnel/releases/tag/v0.1.1. This patch completes the
+package-relative proof chain and adds exact packaged-archive smoke validation; it does
+not broaden the recovery action surface.
+
+**Homebrew receipt:** https://github.com/ArshyaAI/homebrew-tap/actions/runs/32389452633
+installed `Runnel 0.1.1` from the public tap and passed version, doctor self-test, and
+formula tests.
+
 **X launch:** https://x.com/arshya_7/status/2090446169910477145
 **Technical reply:** https://x.com/arshya_7/status/2090446547536285876
 

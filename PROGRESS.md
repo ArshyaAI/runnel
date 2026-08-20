@@ -2,8 +2,8 @@
 
 ## Release status — 2026-08-20
 
-Status: Public launch complete; `Runnel v0.1.0` remains the current published release at
-https://github.com/ArshyaAI/runnel/releases/tag/v0.1.0 and the launch X posts are live at
+Status: Public launch complete; `Runnel v0.1.1` is the current published patch release at
+https://github.com/ArshyaAI/runnel/releases/tag/v0.1.1 and the launch X posts are live at
 https://x.com/arshya_7/status/2090446169910477145 and
 https://x.com/arshya_7/status/2090446547536285876.
 Branch: `main`
@@ -21,7 +21,8 @@ install path, and turn qualified user or maintainer feedback into the next bound
 - Live safety proof: protected workflow classified; action locked; no signal sent
 - GitHub repository: public and created (historical launch prerequisite complete).
 - Public v0.1.0 release and X launch: completed and published (historical launch prerequisite complete).
-- v0.1.1 patch candidate: package-relative documentation, exact packaged-binary smoke,
-  and fail-closed tar member validation for links, traversal, duplicates, and special
-  files are locally verified; publication remains pending the tagged native workflow.
-- Homebrew tap: `brew install ArshyaAI/tap/runnel`; native install and self-test CI passed.
+- v0.1.1 patch release: complete package-relative documentation, exact packaged-binary
+  smoke, and fail-closed tar member validation for links, traversal, duplicates, and
+  special files passed both tagged native lanes and provenance verification.
+- Homebrew tap: `brew install ArshyaAI/tap/runnel`; v0.1.1 installed as commit
+  `9bd826e`, passed `doctor --self-test`, and passed `brew test` in public native CI.

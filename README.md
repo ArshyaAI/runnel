@@ -98,7 +98,7 @@ brew install ArshyaAI/tap/runnel
 runnel doctor --self-test
 ```
 
-The [latest Runnel release](https://github.com/ArshyaAI/runnel/releases/latest)
+The current [Runnel v0.1.1 release](https://github.com/ArshyaAI/runnel/releases/tag/v0.1.1)
 also includes both archives, SHA-256 checksums, CycloneDX SBOMs, and GitHub
 build-provenance attestations. The formula source is public in the
 [ArshyaAI tap](https://github.com/ArshyaAI/homebrew-tap/blob/main/Formula/runnel.rb).
@@ -148,4 +148,4 @@ exact versioned adapter, synthetic fixture corpus, every positive and disqualifi
 action-time revalidation, native PID-reuse/exec tests, privacy review, and independent
 security review. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Apache-2.0. See the [latest Runnel release](https://github.com/ArshyaAI/runnel/releases/latest).
+Apache-2.0. Current release: [Runnel v0.1.1](https://github.com/ArshyaAI/runnel/releases/tag/v0.1.1).
