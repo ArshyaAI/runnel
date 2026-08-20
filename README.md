@@ -14,9 +14,20 @@ workflows. It answers two different questions without pretending they are the sa
 1. **What is using my workstation right now?** — a fast, read-only workflow radar.
 2. **Is this exact worker safe to stop?** — a versioned, fail-closed evidence contract.
 
+## Try it
+
+```bash
+brew install ArshyaAI/tap/runnel
+runnel doctor --self-test
+runnel scan
+```
+
+`scan` is read-only. macOS permission limits can produce documented partial exit `3`
+while still returning the evidence that was available.
+
 ```text
 $ runnel scan
-Runnel 0.1.0 | darwin/arm64
+Runnel 0.1.1 | darwin/arm64
 Snapshot: 314 workflow group(s) | showing 24, omitted 290 low-signal group(s)
 
 PROTECTED wf-… [codex] — 11 processes, 504.2 MiB RSS
@@ -107,6 +118,19 @@ also includes both archives, SHA-256 checksums, CycloneDX SBOMs, and GitHub
 build-provenance attestations. The formula source is public in the
 [ArshyaAI tap](https://github.com/ArshyaAI/homebrew-tap/blob/main/Formula/runnel.rb).
 
+To verify a downloaded archive against its GitHub build provenance:
+
+```bash
+case "$(uname -m)" in
+  arm64) archive_arch=arm64 ;;
+  x86_64) archive_arch=amd64 ;;
+  *) echo "unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+artifact="runnel_v0.1.1_darwin_${archive_arch}.tar.gz"
+gh release download v0.1.1 --repo ArshyaAI/runnel --pattern "$artifact"
+gh attestation verify "$artifact" --repo ArshyaAI/runnel --source-ref refs/tags/v0.1.1
+```
+
 ## Build from source
 
 Runnel v0.1 targets macOS 14+ on Apple Silicon and Intel. Go 1.25+ and CGO are required.
@@ -115,9 +139,17 @@ Release CI builds with the current stable Go toolchain on native macOS runners.
 ```bash
 git clone https://github.com/ArshyaAI/runnel.git
 cd runnel
-make ci
 make build
-./dist/runnel-darwin-arm64 doctor --self-test
+"./dist/runnel-$(go env GOOS)-$(go env GOARCH)" doctor --self-test
+```
+
+Contributors running the full local gate also need actionlint v1.7.12 and GoReleaser
+v2.17.1:
+
+```bash
+go install github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+go install github.com/goreleaser/goreleaser/v2@v2.17.1
+make ci
 ```
 
 GitHub Releases are the source of truth for signed/checksummed archives. The native
@@ -151,5 +183,13 @@ A detector is a safety contract, not a heuristic plugin. New action support requ
 exact versioned adapter, synthetic fixture corpus, every positive and disqualifier,
 action-time revalidation, native PID-reuse/exec tests, privacy review, and independent
 security review. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## About the builder
+
+Runnel is built by [Arshya](https://github.com/ArshyaAI), who builds AI applications
+that multiply employee productivity inside companies and open-sources the reusable
+tools behind them. For company pilots, technical collaboration, or AI-lab and
+recruiting conversations, [email Arshya](mailto:ashbahal2000@gmail.com) or follow the
+engineering work [on X](https://x.com/arshya_7).
 
 Apache-2.0. Current release: [Runnel v0.1.1](https://github.com/ArshyaAI/runnel/releases/tag/v0.1.1).

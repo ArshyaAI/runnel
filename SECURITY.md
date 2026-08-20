@@ -6,14 +6,13 @@ traversal as a security issue.
 
 ## Supported versions
 
-Until the first public release, only the current `main` branch is supported. After
-v0.1, the latest minor release receives security fixes.
+The latest published minor release and current `main` branch receive security fixes.
 
 ## Report privately
 
-Use GitHub private vulnerability reporting once the public repository exists. Until
-then, contact the maintainer privately through the verified address on the ArshyaAI
-GitHub profile.
+Use [GitHub private vulnerability reporting](https://github.com/ArshyaAI/runnel/security/advisories/new).
+If that form is unavailable, do not disclose vulnerability details publicly. Open a
+content-free issue asking only for the private reporting channel to be restored.
 
 Do not attach raw Runnel receipts, Codex rollouts, session databases, process command
 lines, stack samples, environment variables, repository paths, or credentials to a
