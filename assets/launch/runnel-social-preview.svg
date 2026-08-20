@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title description">
+  <title id="title">Runnel — evidence before action</title>
+  <desc id="description">A fail-closed macOS radar for AI coding workers, separating a historical manual memory incident from an observed Runnel refusal.</desc>
+  <defs>
+    <linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050b0d" stop-opacity="0.98"/>
+      <stop offset="0.62" stop-color="#071113" stop-opacity="0.88"/>
+      <stop offset="1" stop-color="#020708" stop-opacity="0.98"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#6b8589" stroke-opacity="0.08" stroke-width="1"/>
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="640" fill="#03090a"/>
+  <image x="0" y="0" width="1280" height="640" opacity="0.32" xlink:href="runnel-signal-gate-background.png" preserveAspectRatio="xMidYMid slice"/>
+  <rect width="1280" height="640" fill="url(#shade)"/>
+  <rect width="1280" height="640" fill="url(#grid)"/>
+
+  <path d="M48 78H1232" stroke="#769095" stroke-opacity="0.28"/>
+  <text x="48" y="52" fill="#f3f8f7" font-family="Menlo, monospace" font-size="15" font-weight="700" letter-spacing="2">\ RUNNEL / 01 \</text>
+  <g transform="translate(522 35)">
+    <rect x="0" y="0" width="11" height="11" rx="2" fill="#b7ff38" filter="url(#glow)"/>
+    <text x="25" y="11" fill="#b7ff38" font-family="Menlo, monospace" font-size="13" font-weight="700" letter-spacing="1.7">EVIDENCE BEFORE ACTION</text>
+  </g>
+  <text x="1232" y="52" text-anchor="end" fill="#9db1b5" font-family="Menlo, monospace" font-size="13" letter-spacing="1.8">LOCAL · MACOS · OPEN SOURCE</text>
+
+  <text x="48" y="126" fill="#58dce6" font-family="Menlo, monospace" font-size="14" letter-spacing="2">THE QUESTION</text>
+  <text x="48" y="198" fill="#f5faf9" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="67" font-weight="750" letter-spacing="-2.4">Your AI agent is using memory.</text>
+  <text x="48" y="274" fill="#f5faf9" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="67" font-weight="750" letter-spacing="-2.4">Is it working?</text>
+  <text x="50" y="322" fill="#c7d4d3" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="24">Runnel proves what is safe to stop—before it sends a signal.</text>
+
+  <g transform="translate(48 366)">
+    <rect width="554" height="172" rx="4" fill="#041012" fill-opacity="0.86" stroke="#ffd659" stroke-opacity="0.62"/>
+    <rect x="0" y="0" width="554" height="42" rx="4" fill="#ffd659"/>
+    <text x="22" y="28" fill="#071012" font-family="Menlo, monospace" font-size="19" font-weight="700">HISTORICAL / MANUAL · NOT RUNNEL OUTPUT</text>
+    <text x="24" y="96" fill="#f5faf9" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="45" font-weight="750">4.5 GB</text>
+    <text x="195" y="96" fill="#f5faf9" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="42" font-weight="700">37%</text>
+    <text x="280" y="96" fill="#58dce6" font-family="Menlo, monospace" font-size="32">→</text>
+    <text x="328" y="96" fill="#f5faf9" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="42" font-weight="700">71%</text>
+    <text x="24" y="124" fill="#9db1b5" font-family="Menlo, monospace" font-size="11" letter-spacing="1">COMPLETED SESSION</text>
+    <text x="195" y="124" fill="#9db1b5" font-family="Menlo, monospace" font-size="11" letter-spacing="1">FREE MEMORY AFTER TARGETED TERM</text>
+    <path d="M24 140H530" stroke="#6f888c" stroke-opacity="0.3"/>
+    <text x="24" y="160" fill="#c7d4d3" font-family="Menlo, monospace" font-size="12">Active Codex + cmux survived.</text>
+  </g>
+
+  <g transform="translate(626 366)">
+    <rect width="606" height="172" rx="4" fill="#041012" fill-opacity="0.86" stroke="#b7ff38" stroke-opacity="0.72"/>
+    <rect x="0" y="0" width="606" height="42" rx="4" fill="#b7ff38"/>
+    <text x="22" y="28" fill="#071012" font-family="Menlo, monospace" font-size="20" font-weight="700">RUNNEL / OBSERVED REFUSAL</text>
+    <text x="24" y="94" fill="#f5faf9" font-family="Menlo, monospace" font-size="28" font-weight="700">4 / 4</text>
+    <text x="182" y="94" fill="#b7ff38" font-family="Menlo, monospace" font-size="24" font-weight="700">PROTECTED</text>
+    <text x="398" y="94" fill="#ffd659" font-family="Menlo, monospace" font-size="24" font-weight="700">LOCKED</text>
+    <text x="24" y="121" fill="#9db1b5" font-family="Menlo, monospace" font-size="11" letter-spacing="1">SAMPLES</text>
+    <text x="182" y="121" fill="#9db1b5" font-family="Menlo, monospace" font-size="11" letter-spacing="1">CLASSIFICATION</text>
+    <text x="398" y="121" fill="#9db1b5" font-family="Menlo, monospace" font-size="11" letter-spacing="1">ACTION</text>
+    <path d="M24 136H582" stroke="#6f888c" stroke-opacity="0.3"/>
+    <text x="24" y="159" fill="#b7ff38" font-family="Menlo, monospace" font-size="15" font-weight="700">NO SIGNAL</text>
+    <text x="150" y="159" fill="#c7d4d3" font-family="Menlo, monospace" font-size="11">Missing evidence means refusal.</text>
+  </g>
+
+  <text x="48" y="590" fill="#f5faf9" font-family="Menlo, monospace" font-size="13" font-weight="700" letter-spacing="1.2">TRACE THE WORK.</text>
+  <text x="192" y="590" fill="#9db1b5" font-family="Menlo, monospace" font-size="12" letter-spacing="1.2">STOP ONLY WHAT THE EVIDENCE PROVES SAFE.</text>
+  <text x="1232" y="590" text-anchor="end" fill="#9db1b5" font-family="Menlo, monospace" font-size="12" letter-spacing="1.2">github.com/ArshyaAI/runnel</text>
+</svg>
