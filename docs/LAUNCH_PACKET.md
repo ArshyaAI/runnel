@@ -1,7 +1,9 @@
 # Runnel v0.1 launch packet
 
-**Status:** draft for review. No post, release, issue, or announcement has been
-published by this document.
+**Status:** published on 2026-08-20.
+
+**X launch:** https://x.com/arshya_7/status/2090446169910477145
+**Technical reply:** https://x.com/arshya_7/status/2090446547536285876
 
 **Tagline:** Trace the work. Stop only what the evidence proves safe.
 
