@@ -1,0 +1,19 @@
+# Build output
+/bin/
+/dist/
+/coverage/
+*.out
+
+# Local runtime evidence and receipts
+/.runnel/
+/tmp/
+
+# Editors and macOS
+.DS_Store
+.idea/
+.vscode/
+
+# Local environment
+.env
+.env.*
+!.env.example
