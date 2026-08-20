@@ -1,11 +1,10 @@
 # Tasks
 
-## Ready for action-time approval
+## In progress
 
-- [ ] Create and push the public GitHub repository
-- [ ] Run native GitHub CI on arm64 and Intel macOS runners
-- [ ] Tag and assemble the attested v0.1.0 release candidate
-- [ ] Publish the approved X launch post and image
+- [ ] Publish and verify the tagged v0.1.1 native patch release.
+- [ ] Capture the 1-hour and 24-hour launch conversion checkpoints.
+- [ ] Turn one qualified maintainer/user problem into a useful contribution.
 
 ## Done
 
@@ -22,3 +21,6 @@
 - [x] Package deterministic Darwin artifacts and Homebrew formula metadata
 - [x] Prepare demo, README hero, launch card, GitHub copy, and X launch packet
 - [x] Complete independent release/security review with all material findings closed
+- [x] Publish the public repository, native v0.1.0 release, X launch, and technical reply
+- [x] Publish the checksum-pinned Homebrew tap with native install/self-test CI
+- [x] Prepare and locally verify v0.1.1 archive hardening with complete linked docs and adversarial tar validation

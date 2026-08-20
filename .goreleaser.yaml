@@ -39,6 +39,13 @@ archives:
       - README.md
       - SECURITY.md
       - PRIVACY.md
+      - CONTRIBUTING.md
+      - docs/CODEX_ADAPTER_CALIBRATION.md
+      - docs/ORIGIN_STORY.md
+      - docs/PERFORMANCE.md
+      - docs/THREAT_MODEL.md
+      - docs/XNU_IDENTITY_PROOF.md
+      - assets/launch/runnel-launch-card.png
       - schema/*.json
       - schema/**/*.json
       - completions/*

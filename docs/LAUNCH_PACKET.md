@@ -1,6 +1,7 @@
 # Runnel v0.1 launch packet
 
 **Status:** published on 2026-08-20.
+**Release:** `Runnel v0.1.0` (non-draft, non-prerelease), published at 2026-08-20T06:42:49Z: https://github.com/ArshyaAI/runnel/releases/tag/v0.1.0
 
 **X launch:** https://x.com/arshya_7/status/2090446169910477145
 **Technical reply:** https://x.com/arshya_7/status/2090446547536285876
@@ -135,7 +136,7 @@ github.com/ArshyaAI/runnel
 
 The commands below are in the current CLI help and README. Use a built binary in a
 recording when available; source checkout commands are included so the demo is
-reproducible before a public release archive exists.
+reproducible with the public release archive.
 
 ```bash
 cd runnel
@@ -158,8 +159,7 @@ Suggested narration:
    current observed live rows had no closed edge and remained locked.
 
 For a binary recording, replace `go run ./cmd/runnel` with the path to the locally
-built `runnel` binary; do not imply that a GitHub release archive or release URL
-exists until the release gate is complete.
+built `runnel` binary; for release references, use the published release URL above.
 
 ## Claims and evidence
 
@@ -178,29 +178,24 @@ Primary evidence files: [origin story](ORIGIN_STORY.md),
 [performance evidence](PERFORMANCE.md), [Codex adapter calibration](CODEX_ADAPTER_CALIBRATION.md),
 [detector contract](DETECTOR_CONTRACT.md), and the repository [README](../README.md).
 
-## Launch checklist
+## Launch receipts
 
-Everything below is a review gate. External actions remain unchecked until the
-action-time authorization is explicit and the corresponding receipt is captured.
+Completed launch gates:
 
-- [ ] Confirm the final post/thread text and exact claims.
-- [ ] Confirm the demo was recorded from a clean checkout or identify the local build
-      used; retain the command output and the documented partial-scan caveat.
-- [ ] Re-run the release candidate's local tests and `git diff --check`.
-- [ ] Reconcile README, license, security/privacy docs, and release metadata.
-- [ ] Confirm no private paths, raw process identifiers, prompt/response content,
-      rollout bodies, or local receipts appear in screenshots or copy.
-- [ ] Confirm the current Codex adapter/version evidence has not drifted.
-- [ ] **External GitHub action: unchecked.** Create/publish a release, tag, or
-      release asset only with action-time authorization and a captured GitHub receipt.
-- [ ] **External X action: unchecked.** Post the single post or thread only with
-      action-time authorization and a captured URL/receipt.
-- [ ] **External HN/Reddit action: unchecked.** Submit only with action-time
-      authorization and a captured URL/receipt.
-- [ ] **External GitHub discussion/issue action: unchecked.** Open or announce only
-      with action-time authorization and a captured URL/receipt.
-- [ ] After any authorized publication, record exactly what was published and where;
-      do not infer publication from a local draft, tag, or build.
+- [x] Final post and technical-reply text confirmed; public URLs are captured above.
+- [x] Tagged release tests, native arm64/amd64 gates, package checksums, and provenance passed.
+- [x] README, license, security/privacy docs, adapter calibration, and release metadata reconciled.
+- [x] Launch media and copy reviewed for private paths, raw process identifiers,
+      prompt/response content, rollout bodies, and local receipts.
+- [x] GitHub repository, `v0.1.0` tag, release assets, and Homebrew tap published.
+- [x] X launch and technical reply published with captured URLs.
+
+Optional follow-on distribution experiments remain separately gated:
+
+- [ ] Record a short clean-install demo with the documented partial-scan caveat.
+- [ ] Submit to HN or Reddit only with action-time authorization and a captured URL.
+- [ ] Join a relevant GitHub discussion or issue only when Runnel adds concrete evidence,
+      with action-time authorization and a captured URL.
 
 ## Suggested HN copy
 

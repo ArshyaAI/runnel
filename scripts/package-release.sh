@@ -30,6 +30,11 @@ if ! command -v goreleaser >/dev/null 2>&1; then
 	exit 4
 fi
 
+# Make exports command-line variables to recipes. Its TARGET uses `darwin/arm64`,
+# while GoReleaser interprets TARGET as its internal build target identifier and
+# would silently select no binary. The explicit GOOS/GOARCH below are authoritative.
+unset TARGET
+
 os="${target%%/*}"
 arch="${target##*/}"
 archive_name="runnel_${version}_${os}_${arch}.tar.gz"
@@ -38,7 +43,7 @@ trap 'rm -rf -- "$package_root"' EXIT
 stage="$package_root/stage"
 mkdir -p "$stage/completions" "$stage/schema" "$output_dir"
 
-release_flags=(build --clean --single-target --id runnel --output "$stage/runnel")
+release_flags=(build --clean --single-target --id runnel)
 if [ "${RUNNEL_SNAPSHOT:-0}" = "1" ]; then
 	release_flags+=(--snapshot --skip=before)
 else
@@ -49,20 +54,49 @@ else
 	fi
 fi
 CGO_ENABLED=1 GOOS="$os" GOARCH="$arch" goreleaser "${release_flags[@]}"
+built_binaries="$(find dist -type f -name runnel -print)"
+built_binary_count="$(printf '%s\n' "$built_binaries" | awk 'NF { count++ } END { print count + 0 }')"
+if [ "$built_binary_count" -ne 1 ]; then
+	echo "expected exactly one GoReleaser binary, found $built_binary_count" >&2
+	exit 4
+fi
+cp "$built_binaries" "$stage/runnel"
 mkdir -p "$output_dir"
 
 "$stage/runnel" completion bash > "$stage/completions/runnel.bash"
 "$stage/runnel" completion zsh > "$stage/completions/runnel.zsh"
 "$stage/runnel" completion fish > "$stage/completions/runnel.fish"
 "$stage/runnel" completion powershell > "$stage/completions/runnel.ps1"
-cp LICENSE PRIVACY.md README.md SECURITY.md "$stage/"
-cp schema/*.json "$stage/schema/"
+package_files=(
+	LICENSE
+	PRIVACY.md
+	README.md
+	SECURITY.md
+	CONTRIBUTING.md
+	docs/CODEX_ADAPTER_CALIBRATION.md
+	docs/ORIGIN_STORY.md
+	docs/PERFORMANCE.md
+	docs/THREAT_MODEL.md
+	docs/XNU_IDENTITY_PROOF.md
+	assets/launch/runnel-launch-card.png
+)
+for package_file in "${package_files[@]}"; do
+	if [ ! -f "$package_file" ]; then
+		echo "required package file is missing: $package_file" >&2
+		exit 4
+	fi
+	mkdir -p "$stage/$(dirname "$package_file")"
+	cp "$package_file" "$stage/$package_file"
+done
+for schema_file in schema/*.json; do
+	cp "$schema_file" "$stage/$schema_file"
+done
 chmod 0755 "$stage/runnel"
-chmod 0644 "$stage"/*.md "$stage/LICENSE" "$stage/completions"/* "$stage/schema"/*.json
+find "$stage" -type f ! -name runnel -exec chmod 0644 {} +
 
 # Normalize metadata and gzip headers so two builds of the same binary and
 # source tree produce byte-identical archives.
-TZ=UTC touch -t 198001010000 "$stage/runnel" "$stage"/*.md "$stage/LICENSE" "$stage/completions"/* "$stage/schema"/*.json
+TZ=UTC find "$stage" -type f -exec touch -t 198001010000 {} +
 file_list="$package_root/files.txt"
 (cd "$stage" && find . -type f -print | LC_ALL=C sort) > "$file_list"
 uncompressed="$package_root/${archive_name%.gz}"
@@ -71,6 +105,11 @@ COPYFILE_DISABLE=1 /usr/bin/tar \
 	--no-xattrs --no-mac-metadata -cf "$uncompressed" -C "$stage" -T "$file_list"
 gzip -n -9 "$uncompressed"
 cp "$uncompressed.gz" "$output_dir/$archive_name"
+
+# Keep the release contract executable: every relative README target must be
+# present at the same path in the extracted archive, with no missing package
+# content.
+scripts/check-release-archive.sh "$output_dir/$archive_name" "$version" --contract-only
 
 (
 	cd "$output_dir"

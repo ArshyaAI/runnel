@@ -104,6 +104,8 @@ jobs:
           install-only: true
       - name: Package reproducible native archive
         run: scripts/package-release.sh "darwin/${{ matrix.arch }}" "${{ inputs.version }}" dist
+      - name: Verify exact packaged archive
+        run: scripts/check-release-archive.sh "dist/runnel_${{ inputs.version }}_darwin_${{ matrix.arch }}.tar.gz" "${{ inputs.version }}"
       - name: Generate CycloneDX SBOM
         uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
         with:

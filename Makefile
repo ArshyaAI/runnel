@@ -91,6 +91,12 @@ security:
 
 .PHONY: check-scripts
 check-scripts:
+	@set -e
+	@$(MAKE) --no-print-directory assert-version VERSION=v0.1.0
+	@if $(MAKE) --no-print-directory assert-version VERSION=v0.1 >/dev/null 2>&1; then \
+		echo "assert-version accepted a non-semantic version"; \
+		exit 1; \
+	fi
 	tmp_dir=$$(mktemp -d /tmp/runnel-script-checks.XXXXXX); \
 	mkdir -p "$$tmp_dir/.cache" "$$tmp_dir/.tmp"; \
 	GOCACHE=$$tmp_dir/.cache GOTMPDIR=$$tmp_dir/.tmp; \
@@ -109,6 +115,42 @@ check-scripts:
 	grep -Eq '^#compdef runnel' "$$tmp_dir/completions/runnel.zsh"; \
 	[ -s "$$tmp_dir/completions/runnel.fish" ] || exit 1; \
 	[ -s "$$tmp_dir/completions/runnel.ps1" ] || exit 1; \
+	package_root="$$tmp_dir/package"; \
+	mkdir -p "$$package_root/completions" "$$package_root/schema" "$$package_root/docs" "$$package_root/assets/launch"; \
+	for file in LICENSE PRIVACY.md README.md SECURITY.md CONTRIBUTING.md; do cp "$$file" "$$package_root/$$file"; done; \
+	for file in docs/CODEX_ADAPTER_CALIBRATION.md docs/ORIGIN_STORY.md docs/PERFORMANCE.md docs/THREAT_MODEL.md docs/XNU_IDENTITY_PROOF.md assets/launch/runnel-launch-card.png; do cp "$$file" "$$package_root/$$file"; done; \
+	cp schema/*.json "$$package_root/schema/"; \
+	cp "$$tmp_dir/runnel-host" "$$package_root/runnel"; \
+	cp "$$tmp_dir/completions"/* "$$package_root/completions/"; \
+	( cd "$$package_root" && COPYFILE_DISABLE=1 tar -czf "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" . ); \
+	scripts/check-release-archive.sh "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" v0.1.0 --contract-only; \
+	unsafe_root="$$tmp_dir/unsafe"; \
+	mkdir -p "$$unsafe_root"; \
+	ln -s /bin/true "$$unsafe_root/runnel"; \
+	( cd "$$unsafe_root" && COPYFILE_DISABLE=1 tar -czf "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" . ); \
+	if scripts/check-release-archive.sh "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" v0.1.0 --contract-only > /dev/null 2> "$$tmp_dir/unsafe.err"; then \
+		echo "archive contract accepted an absolute symlink"; \
+		exit 1; \
+	fi; \
+	grep -Fq 'unsupported archive member type' "$$tmp_dir/unsafe.err"; \
+	rm "$$unsafe_root/runnel"; \
+	ln -s ../README.md "$$unsafe_root/README.md"; \
+	( cd "$$unsafe_root" && COPYFILE_DISABLE=1 tar -czf "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" . ); \
+	if scripts/check-release-archive.sh "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" v0.1.0 --contract-only > /dev/null 2> "$$tmp_dir/unsafe.err"; then \
+		echo "archive contract accepted a parent-traversing symlink"; \
+		exit 1; \
+	fi; \
+	grep -Fq 'unsupported archive member type' "$$tmp_dir/unsafe.err"; \
+	rm "$$unsafe_root/README.md"; \
+	printf 'hard-link-fixture\n' > "$$unsafe_root/source"; \
+	ln "$$unsafe_root/source" "$$unsafe_root/runnel"; \
+	( cd "$$unsafe_root" && COPYFILE_DISABLE=1 tar -czf "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" . ); \
+	tar -tvzf "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" | grep -Eq '^h'; \
+	if scripts/check-release-archive.sh "$$tmp_dir/runnel_v0.1.0_darwin_arm64.tar.gz" v0.1.0 --contract-only > /dev/null 2> "$$tmp_dir/unsafe.err"; then \
+		echo "archive contract accepted a hard link"; \
+		exit 1; \
+	fi; \
+	grep -Fq 'unsupported archive member type' "$$tmp_dir/unsafe.err"; \
 	printf '%s\n' \
 	  "0000000000000000000000000000000000000000000000000000000000000000  runnel_v0.1.0_darwin_arm64.tar.gz" \
 	  "1111111111111111111111111111111111111111111111111111111111111111  runnel_v0.1.0_darwin_amd64.tar.gz" > "$$tmp_dir/checksums.txt"; \
@@ -181,7 +223,7 @@ assert-version:
 		echo "VERSION is required"; \
 		exit 1; \
 	fi; \
-	if ! echo "$(VERSION)" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]$'; then \
+	if ! echo "$(VERSION)" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]$$'; then \
 		echo "VERSION must be vX.Y.Z"; \
 		exit 1; \
 	fi

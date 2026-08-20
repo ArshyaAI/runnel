@@ -13,8 +13,7 @@ go test -race ./...
 go vet ./...
 ```
 
-Runnel currently targets Go 1.25+ and native macOS 14+ runners. The public repository
-and URL in this document become valid only after launch.
+Runnel currently targets Go 1.25+ and native macOS 14+ runners.
 
 ## Before changing an action detector
 

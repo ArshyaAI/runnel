@@ -87,6 +87,22 @@ Exit codes distinguish success (`0`), usage (`2`), partial read-only output (`3`
 locked/refused recovery (`4`), post-signal partial (`5`), failure (`6`),
 schema/privacy integrity failure (`7`), and cancellation (`130`).
 
+## Install
+
+Runnel releases ship as checksum-pinned native archives for Apple Silicon and
+Intel Macs. Homebrew selects the matching archive and installs its shell
+completions:
+
+```bash
+brew install ArshyaAI/tap/runnel
+runnel doctor --self-test
+```
+
+The [latest Runnel release](https://github.com/ArshyaAI/runnel/releases/latest)
+also includes both archives, SHA-256 checksums, CycloneDX SBOMs, and GitHub
+build-provenance attestations. The formula source is public in the
+[ArshyaAI tap](https://github.com/ArshyaAI/homebrew-tap/blob/main/Formula/runnel.rb).
+
 ## Build from source
 
 Runnel v0.1 targets macOS 14+ on Apple Silicon and Intel. Go 1.25+ and CGO are required.
@@ -100,9 +116,9 @@ make build
 ./dist/runnel-darwin-arm64 doctor --self-test
 ```
 
-GitHub Releases will be the source of truth for signed/checksummed archives. The native
+GitHub Releases are the source of truth for signed/checksummed archives. The native
 release pipeline produces arm64 and amd64 archives, SHA-256 checksums, CycloneDX SBOMs,
-GitHub provenance attestations, and a non-publishing Homebrew formula candidate. npm is
+GitHub provenance attestations, and the checksum-pinned Homebrew formula. npm is
 intentionally not used.
 
 ## Performance
@@ -132,4 +148,4 @@ exact versioned adapter, synthetic fixture corpus, every positive and disqualifi
 action-time revalidation, native PID-reuse/exec tests, privacy review, and independent
 security review. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Apache-2.0. Pre-release: no public v0.1 tag has been published yet.
+Apache-2.0. See the [latest Runnel release](https://github.com/ArshyaAI/runnel/releases/latest).
