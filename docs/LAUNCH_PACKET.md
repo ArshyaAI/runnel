@@ -19,26 +19,82 @@ local-first tool that turns the *evidence chain* behind that decision into a
 read-only radar and a fail-closed contract. The incident was manual; it was not
 recovered by Runnel.
 
-## Final single X post
+## Final Premium X post
 
-My Mac ran out of application memory while I was running Codex.
+AI coding tools made it easy for me to start more agents.
 
-One “finished” worker was still rereading a 4.5 GB session. I manually proved it
-was safe to stop, sent one targeted `SIGTERM`, and free memory jumped from 37% to
-71%—without killing my active Codex or cmux work.
+Then my Mac ran out of application memory—and nothing could tell me which Codex
+worker was safe to stop.
 
-So I built Runnel: an open-source macOS CLI that shows which AI workflows are
-active, protected, or safe to stop—and refuses to act when evidence is incomplete.
+Force Quit could kill cmux and every live session. Activity Monitor showed a
+process, not whether its work was already finished.
 
-No telemetry. No daemon. No blind kill button.
+I found one completed worker still rereading an unchanged 4.5 GB session file.
+After checking its parent, terminal, network, file activity, and stack, I sent
+SIGTERM to that exact worker.
 
-github.com/ArshyaAI/runnel
+Free memory rose from 37% to 71%. Every unrelated Codex and cmux session stayed
+alive.
+
+That incident changed the question for me.
+
+Not: “How do I kill an expensive process?”
+
+But: “What evidence would make stopping this exact worker safe?”
+
+I built Runnel around that boundary.
+
+`runnel scan` maps local AI workflows read-only. Recovery stays locked unless a
+versioned detector can prove an exact, childless, completed Codex worker and
+revalidate it immediately before acting. Missing or contradictory evidence means
+refusal.
+
+The first live dogfood did refuse. It identified a protected workflow, displayed
+ACTION LOCKED, and sent no signal.
+
+That is not a boring edge case. That is the product.
+
+Runnel v0.1 is now open source for macOS under Apache-2.0. The original recovery
+was manual; Runnel is the executable evidence contract I wish I had during it.
+
+If you run heavy Codex workflows, I would love you to attack the safety model:
+what would you need to see before trusting a tool to stop one worker without
+touching the rest?
 
 ### Recommended first reply
 
-The original recovery was manual. Current Runnel proof is deliberately boring:
-10 real scans at 0.24 s p95 and 22.2 MiB max RSS; a live protected workflow led to
-ACTION LOCKED and no signal. That refusal is the product.
+Repo + release: https://github.com/ArshyaAI/runnel
+
+Current scope is intentionally narrow: an exact ChatGPT-embedded Codex adapter,
+read-only radar, identity-bound SIGTERM only after confirmation, immutable receipts,
+and no SIGKILL. Unsupported versions remain visible but locked.
+
+Ten real scans on my M4 Pro measured 0.24 s p95 and 22.2 MiB max RSS. The threat
+model, test plan, calibration evidence, and build provenance are in the repository.
+
+## Final X media
+
+Upload these two cards in order:
+
+1. [`runnel-social-01-incident.png`](../assets/launch/runnel-social-01-incident.png)
+   — the historical manual incident, including the 4.5 GB completed session and
+   37%→71% free-memory result.
+2. [`runnel-social-02-refusal.png`](../assets/launch/runnel-social-02-refusal.png)
+   — current live Runnel proof: protected, action locked, zero signals.
+
+Both cards are 1200×1500 and contain no session IDs, workflow IDs, local paths,
+account details, or client data.
+
+**Alt text, card 1:** Dark forensic-style card reading “My Mac ran out of memory.”
+It shows a completed 4.5 GB Codex session still being reread, free memory rising
+from 37% to 71% after one identity-checked targeted TERM, and notes that active
+Codex and cmux sessions survived. It is explicitly labeled as a historical manual
+incident, not a Runnel recovery claim.
+
+**Alt text, card 2:** Dark forensic-style card reading “The safe answer was: not
+yet.” Four bounded observations reach an evidence gate that classifies the workflow
+as protected. The card shows ACTION LOCKED and zero signals, explaining that a
+cleanup tool that guesses is worse than no cleanup tool.
 
 ## Optional four-post thread
 
