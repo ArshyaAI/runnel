@@ -21,26 +21,24 @@ recovered by Runnel.
 
 ## Final single X post
 
-An AI coding workstation can be busy without making progress.
+My Mac ran out of application memory while I was running Codex.
 
-In one real Codex incident, a completed worker kept rereading a 4.5 GB rollout.
-After a manual evidence pass, one targeted `SIGTERM` moved free memory from 37% to
-71% while unrelated Codex and cmux sessions stayed alive.
+One “finished” worker was still rereading a 4.5 GB session. I manually proved it
+was safe to stop, sent one targeted `SIGTERM`, and free memory jumped from 37% to
+71%—without killing my active Codex or cmux work.
 
-I built Runnel to make the evidence chain inspectable:
+So I built Runnel: an open-source macOS CLI that shows which AI workflows are
+active, protected, or safe to stop—and refuses to act when evidence is incomplete.
 
-• local, read-only workflow radar
-• exact four-sample Codex detector
-• protected workflows stay out of the action set
-• recovery is locked unless every fact is revalidated
+No telemetry. No daemon. No blind kill button.
 
-Current proof: 10 real scans, 0.24 s p95, 22.2 MiB max RSS. No telemetry, daemon,
-API key, `SIGKILL`, raw-PID command, or automated action.
-
-Trace the work. Stop only what the evidence proves safe.
-
-Runnel v0.1 — Apache-2.0
 github.com/ArshyaAI/runnel
+
+### Recommended first reply
+
+The original recovery was manual. Current Runnel proof is deliberately boring:
+10 real scans at 0.24 s p95 and 22.2 MiB max RSS; a live protected workflow led to
+ACTION LOCKED and no signal. That refusal is the product.
 
 ## Optional four-post thread
 
