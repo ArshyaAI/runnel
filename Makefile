@@ -18,10 +18,8 @@ COMMIT ?= $(shell git rev-parse --short=12 HEAD 2>/dev/null || echo unknown)
 BUILD_DATE ?= $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 PACKAGE ?= github.com/ArshyaAI/runnel/internal/buildinfo
 LDFLAGS := -s -w -buildid= -X $(PACKAGE).Version=$(VERSION) -X $(PACKAGE).Commit=$(COMMIT) -X $(PACKAGE).Date=$(BUILD_DATE)
-GOFMT_TARGETS := $(shell rg --files -g '*.go')
-GO_TARGETS := $(shell rg --files -g '*.go' | tr '\n' ' ')
+GOFMT_TARGETS := $(shell git ls-files '*.go')
 BIN_PATH := dist/runnel-$(GOOS)-$(GOARCH)
-SCHEMA_PATHS := $(shell rg --files schema -g '*.json' | tr '\n' ' ')
 TARGET ?= darwin/amd64
 
 .PHONY: help
@@ -108,7 +106,7 @@ check-scripts:
 	scripts/build-release-completions.sh darwin/arm64 v0.1.0 "$$tmp_dir"; \
 	[ -s "$$tmp_dir/completions/runnel.bash" ] || exit 1; \
 	[ -s "$$tmp_dir/completions/runnel.zsh" ] || exit 1; \
-	rg -q '^#compdef runnel' "$$tmp_dir/completions/runnel.zsh"; \
+	grep -Eq '^#compdef runnel' "$$tmp_dir/completions/runnel.zsh"; \
 	[ -s "$$tmp_dir/completions/runnel.fish" ] || exit 1; \
 	[ -s "$$tmp_dir/completions/runnel.ps1" ] || exit 1; \
 	printf '%s\n' \
@@ -116,9 +114,9 @@ check-scripts:
 	  "1111111111111111111111111111111111111111111111111111111111111111  runnel_v0.1.0_darwin_amd64.tar.gz" > "$$tmp_dir/checksums.txt"; \
 	scripts/build-homebrew-formula.sh darwin/amd64 v0.1.0 "$$tmp_dir"; \
 	[ -s "$$tmp_dir/runnel.rb" ] || exit 1; \
-	rg -q 'download/v#\{version\}/runnel_v#\{version\}_darwin_arm64.tar.gz' "$$tmp_dir/runnel.rb"; \
-	rg -q 'zsh_completion\.install "completions/runnel\.zsh" => "_runnel"' "$$tmp_dir/runnel.rb"; \
-	if rg -q '\.write ' "$$tmp_dir/runnel.rb"; then \
+	grep -Fq 'download/v#{version}/runnel_v#{version}_darwin_arm64.tar.gz' "$$tmp_dir/runnel.rb"; \
+	grep -Fq 'zsh_completion.install "completions/runnel.zsh" => "_runnel"' "$$tmp_dir/runnel.rb"; \
+	if grep -Fq '.write ' "$$tmp_dir/runnel.rb"; then \
 		echo "formula overwrites a packaged completion"; \
 		exit 1; \
 	fi; \
