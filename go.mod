@@ -1,6 +1,6 @@
 module github.com/ArshyaAI/runnel
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/charmbracelet/bubbletea v1.3.10
@@ -9,7 +9,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.50
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.3
 	github.com/spf13/cobra v1.10.2
-	golang.org/x/sys v0.47.0
+	golang.org/x/sys v0.48.0
 )
 
 require (
